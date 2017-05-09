@@ -1,0 +1,28 @@
+{
+    "prepare_queue": {
+        "installed": [],
+        "uninstalled": []
+    },
+    "config_munge": {
+        "files": {}
+    },
+    "installed_plugins": {
+        "phonegap-plugin-barcodescanner": {
+            "PACKAGE_NAME": "com.doubleapublishing.scanner"
+        },
+        "cordova-plugin-whitelist": {
+            "PACKAGE_NAME": "com.doubleapublishing.scanner"
+        },
+        "cordova-plugin-inappbrowser": {
+            "PACKAGE_NAME": "com.doubleapublishing.scanner"
+        },
+        "cordova-plugin-device": {
+            "PACKAGE_NAME": "com.doubleapublishing.scanner"
+        }
+    },
+    "dependent_plugins": {
+        "cordova-plugin-compat": {
+            "PACKAGE_NAME": "com.doubleapublishing.scanner"
+        }
+    }
+}
