@@ -55,7 +55,7 @@ body {
 h1 {
     font-size:24px;
     font-weight:normal;
-    margin:0px;
+    margin-top:20px;
     overflow:visible;
     padding:0px;
     text-align:center;
@@ -95,4 +95,8 @@ h1 {
 .blink {
     animation:fade 3000ms infinite;
     -webkit-animation:fade 3000ms infinite;
+}
+
+button{
+    font-size: 16px;
 }

@@ -30,8 +30,11 @@ function barcodescanner(){
                 "Cancelled: " + result.cancelled);*/
 
           //var isbn = '9781524261450';
+
+          var base_url = 'http://dap-rest-prod.mircloud.host/api';
+
           $.ajax({
-              url: 'http://dap-rest-prod.mircloud.host/api/book/isbn/'+result.text,
+              url: base_url+'/book/isbn/'+result.text,
               success: function(response) {
                   if (response.error) {
                       alert('error'+JSON.stringify(response.error));
@@ -39,14 +42,50 @@ function barcodescanner(){
                       var id = response.response;
 
                       $.ajax({
-                          url: 'http://dap-rest-prod.mircloud.host/api/book/'+id+'?fields=id,name,original_name,description',
+                          url: base_url+'/book/'+id+'?fields=id,name,original_name,rating,video_type,video_link,authors_id',
                           success: function(response) {
-                              alert(JSON.stringify(response));
-
                               var book = response.response;
                               if (book) {
                                   $('.name').text(book.name);
-                                  $('.description').text(book.description);
+                                  $('.cover').attr('src', base_url + '/storage/book/'+book.id+'/cover');
+                                  $('.rating').text(book.rating);
+
+                                  $('.video').html('<iframe width="200" height="215" src="http://www.youtube.com/embed/'+book.video_link+'?rel=0&amp;controls=0&amp;showinfo=0" frameborder="0" allowfullscreen></iframe>')
+
+                                  $.ajax({
+                                      url: base_url+'/author/?fields=name&restrict='+JSON.stringify({authors_id: book.authors_id}),
+                                      success: function(response) {
+                                          var authors = response.response;
+                                          if (authors) {
+                                              var result = '';
+                                              authors.forEach(function(author){
+                                                  result += author.name + ', ';
+                                              });
+
+                                              $('.authors').text(result);
+                                          }
+                                      }
+                                  });
+
+                                  $.ajax({
+                                      url: base_url + '/book/'+book.id+'/comments?limit=20&fields=comment,name',
+                                      success: function(response) {
+                                          var comments = response.response;
+
+                                          alert(JSON.stringify(comments));
+
+                                          if (comments) {
+                                              var result = '';
+                                              comments.forEach(function(comment){
+                                                  result += comment.name + '<br/>' + comment.comment + '<br /><hr/><br/>';
+                                              });
+
+                                              $('.comments').html(result);
+                                          }
+                                      }, error: function() {
+                                              alert('error in comments');
+                                      }
+                                  })
                               }
                           },
                           error: function(xhr) {
@@ -74,6 +113,7 @@ function barcodescanner(){
       }
    );
 }
+
 var app = {
     // Application Constructor
     initialize: function() {
