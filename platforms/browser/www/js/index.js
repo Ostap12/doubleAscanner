@@ -22,7 +22,11 @@ function a() {
     })
 }
 function barcodescanner(){
-	cordova.plugins.barcodeScanner.scan(
+
+   // $('.video').html('<iframe width="200" height="215" src="http://www.youtube.com/embed/PEfxz7PuI0g?rel=0&amp;controls=0&amp;showinfo=0" frameborder="0" allowfullscreen></iframe>');
+
+    cordova.plugins.barcodeScanner.scan(
+
       function (result) {
           /*alert("We got a barcode\n" +
                 "Result: " + result.text + "\n" +
@@ -37,7 +41,7 @@ function barcodescanner(){
               url: base_url+'/book/isbn/'+result.text,
               success: function(response) {
                   if (response.error) {
-                      alert('error'+JSON.stringify(response.error));
+                      alert('Вибачте, немає інформації про дану книгу');
                   } else {
                       var id = response.response;
 
@@ -50,7 +54,7 @@ function barcodescanner(){
                                   $('.cover').attr('src', base_url + '/storage/book/'+book.id+'/cover');
                                   $('.rating').text(book.rating);
 
-                                  $('.video').html('<iframe width="200" height="215" src="http://www.youtube.com/embed/'+book.video_link+'?rel=0&amp;controls=0&amp;showinfo=0" frameborder="0" allowfullscreen></iframe>')
+                                  $('.video').html('<iframe width="200" height="215" src="http://www.youtube.com/embed/'+book.video_link+'?rel=0&amp;controls=0&amp;showinfo=0" frameborder="0" allowfullscreen></iframe>');
 
                                   $.ajax({
                                       url: base_url+'/author/?fields=name&restrict='+JSON.stringify({authors_id: book.authors_id}),
@@ -72,7 +76,7 @@ function barcodescanner(){
                                       success: function(response) {
                                           var comments = response.response;
 
-                                          alert(JSON.stringify(comments));
+
 
                                           if (comments) {
                                               var result = '';
